@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sweep Frax (Polygon)</title>
+<style>
+table {
+    border-collapse: collapse;
+}
+td {
+    border: solid 1px;
+    margin: 0;
+    padding-right: 1em;
+}
+</style>
+</head>
+<body>
+<table>
+<tr style="text-align: center">
+<td>Polygon</td>
+<td>Fantom</td>
+</tr>
+<tr>
+<td><ul id="polygon"></ul></td>
+<td><ul id="fantom"></ul></td>
+</tr>
+</table>
+<script>
+"use strict";
+
+const iQ = document.getElementById.bind(document);
+
+const fill = (id, url, tokens) => {
+    const menu = iQ(id);
+    for (const input in tokens) {
+        for (const output in tokens) {
+            if (input === output) continue;
+            const a = document.createElement('a');
+            a.href = url(tokens[input], tokens[output]);
+            a.textContent = `${input} -> ${output}`;
+            const li = document.createElement('li');
+            li.appendChild(a);
+            menu.appendChild(li);
+        }
+    }
+};
+
+fill('polygon', (i, o) => `https://app.sushi.com/swap?inputCurrency=${i}&outputCurrency=${o}`, {
+    FRAX: '0x104592a158490a9228070E0A8e5343B499e125D0',
+    FRAXc: '0x45c32fA6DF82ead1e2EF74d17b76547EDdFaFF89',
+    FXSc: '0x1a3acf6D19267E2d3e7f898f42803e90C9219062',
+    FXS: '0x3e121107F6F22DA4911079845a470757aF4e1A1b',
+    USDC: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
+});
+fill('fantom', (i, o) => `https://swap.spiritswap.finance/#/swap/${i}`, {
+    FRAX: '0xaf319E5789945197e365E7f7fbFc56B130523B33',
+    FRAXc: '0xdc301622e621166BD8E82f2cA0A26c13Ad0BE355',
+    //WFTM: '0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83',
+    //USDC: '0x04068DA6C83AFCFA0e13ba15A6696662335D5B75',
+});
+
+</script>
+</body>
+</html>
